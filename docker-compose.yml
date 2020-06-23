@@ -2,7 +2,9 @@ version: "3"
 
 services:
   flume:
-    build: ./docker-flume
+    build:
+      context: ./docker-flume
+      dockerfile: Dockerfile
     ports:
       - 44444:44444
 
