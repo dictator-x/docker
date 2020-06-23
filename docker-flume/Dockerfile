@@ -31,7 +31,7 @@ ENV PATH="${FLUME_HOME}/bin:${PATH}"
 COPY flume-env.sh ${flume_home}/conf
 COPY agent/* ${flume_home}/conf
 
+EXPOSE 44444
 
 ENTRYPOINT ["sh", "-c", "flume-ng agent --name a1 --conf $FLUME_HOME/conf --conf-file $FLUME_HOME/conf/example.conf -Dflume.root.logger=INFO,console"]
 
-EXPOSE 44444
