@@ -3,6 +3,7 @@ FROM wrong1121/docker:docker-centos-java8
 ARG home=/root
 ARG software_home=${home}/software
 ARG app_home=${home}/app
+ARG log_home=${home}/log
 
 ENV HOME ${home}
 ENV SOFTWARE_HOME ${software_home}
@@ -29,9 +30,16 @@ RUN \
 ENV PATH="${FLUME_HOME}/bin:${PATH}"
 
 COPY flume-env.sh ${flume_home}/conf
-COPY agent/* ${flume_home}/conf
+COPY agent/ ${flume_home}/conf
 
 EXPOSE 44444
 
-ENTRYPOINT ["sh", "-c", "flume-ng agent --name a1 --conf $FLUME_HOME/conf --conf-file $FLUME_HOME/conf/example.conf -Dflume.root.logger=INFO,console"]
+# ENTRYPOINT ["sh", "-c", "flume-ng agent --name a1 --conf $FLUME_HOME/conf --conf-file $FLUME_HOME/conf/example.conf -Dflume.root.logger=INFO,console"]
+
+ARG test_file=${log_home}/logger
+RUN \
+    [ -d a ] || mkdir -p ${log_home} && \
+    touch ${test_file}
+
+ENTRYPOINT ["sh", "-c", "flume-ng agent --name a1 --conf $FLUME_HOME/conf --conf-file $FLUME_HOME/conf/exec-memory-logger.conf -Dflume.root.logger=INFO,console"]
 
