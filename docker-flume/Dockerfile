@@ -17,8 +17,8 @@ ENV FLUME_NAME flume
 ENV FLUME_HOME ${flume_home}
 
 RUN \
-    mkdir -p ${software_home} && \
-    mkdir -p ${app_home}
+    [ -d a ] || mkdir -p ${software_home} && \
+    [ -d a ] || mkdir -p ${app_home}
 
 RUN \
     yum install -y wget && \
