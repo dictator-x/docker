@@ -34,8 +34,7 @@ RUN \
 
 ENV PATH="${FLUME_HOME}/bin:${PATH}"
 
-COPY flume-env.sh ${FLUME_HOME}/conf
-COPY agent/ ${FLUME_HOME}/conf
+COPY conf/ ${FLUME_HOME}/conf
 
 EXPOSE 44444
 

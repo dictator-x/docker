@@ -22,11 +22,13 @@ ARG kafka_version=2.5.0
 ARG scala_version=2.12
 ARG kafka_name=kafka
 ARG kafka_home=${app_home}/${kafka_name}
+ARG kafka_file="kafka_${scala_version}-${kafka_version}.tgz"
 
 ENV KAFKA_VERSION ${kafka_version}
 ENV SCALA_VERSION ${scala_version}
 ENV KAFKA_NAME ${kafka_name}
-ENV KAFKA_HOME ${KAFKA_HOME}
+ENV KAFKA_HOME ${kafka_home}
+ENV KAFKA_FILE ${kafka_file}
 
 ENV PATH=${PATH}:${SCRIPT_HOME}:${KAFKA_HOME}/bin
 
@@ -38,6 +40,9 @@ RUN \
     yum install -y curl && \
     yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
     yum install -y jq && \
-    download-kafka.sh
+    download-kafka.sh && \
+    sync && mkdir -p ${KAFKA_HOME} && \
+    tar -zxvf ${SOFTWARE_HOME}/${KAFKA_FILE} -C ${KAFKA_HOME} --strip-components=1
+
 
 CMD ["bash"]
