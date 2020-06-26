@@ -1,17 +1,8 @@
-#!/bin/sh -e
+#!/usr/bin/env bash
 
-if [[ -z $1 && -z $SCALA_VERSION ]]; then
-  echo "ERROR: missing SCALA_VERSION"
-  exit 1
-fi
-
-if [[ -z $2 && -z $KAFKA_VERSION ]]; then
-  echo "ERROR: missing KAFKA_VERSION"
-  exit 1
-fi
-
-SCALA_VERSION=$1
-KAFKA_VERSION=$2
+set -o errexit
+set -o nounset
+set -o pipefail
 
 FILENAME="kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz"
 
