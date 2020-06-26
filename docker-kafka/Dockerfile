@@ -28,6 +28,16 @@ ENV SCALA_VERSION ${scala_version}
 ENV KAFKA_NAME ${kafka_name}
 ENV KAFKA_HOME ${KAFKA_HOME}
 
-ENV PATH=${PATH}:${KAFKA_HOME}/bin
+ENV PATH=${PATH}:${SCRIPT_HOME}:${KAFKA_HOME}/bin
 
 COPY script/ ${SCRIPT_HOME}
+
+RUN \
+    chmod a+x ${SCRIPT_HOME}/*.sh && \
+    yum install -y wget && \
+    yum install -y curl && \
+    yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
+    yum install -y jq && \
+    download-kafka.sh
+
+CMD ["bash"]

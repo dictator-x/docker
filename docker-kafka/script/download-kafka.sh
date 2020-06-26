@@ -14,4 +14,4 @@ if [[ ! $(curl -s -f -I "${url}") ]]; then
 fi
 
 echo "Downloading Kafka from $url"
-wget "${url}" -O "/tmp/${FILENAME}"
+wget "${url}" -O "${SOFTWARE_HOME}/${FILENAME}"
