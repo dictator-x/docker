@@ -45,4 +45,6 @@ RUN \
     tar -zxvf ${SOFTWARE_HOME}/${KAFKA_FILE} -C ${KAFKA_HOME} --strip-components=1
 
 
-CMD ["bash"]
+# ENTRYPOINT ["bash", "-r", "start-kafka.sh"]
+ENTRYPOINT ["bash", "start-kafka.sh"]
+# CMD ["bash", "-r", "start-kafka.sh"]
