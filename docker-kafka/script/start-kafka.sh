@@ -4,8 +4,7 @@ set -o errexit
 # set -o nounset
 set -o pipefail
 
-# zookeeper-server-start.sh ${KAFKA_HOME}/config/zookeeper.properties
-if [[ -z $KAFKA_ZK_CONNECTION || $KAFKA_ZK_CONNECTION =~ "localhost" ]]; then
+function downloadAndRunZookeeper() {
     echo "Download Zookeeper" >&2
 
     ZK_VERSION=3.4.14
@@ -33,4 +32,9 @@ if [[ -z $KAFKA_ZK_CONNECTION || $KAFKA_ZK_CONNECTION =~ "localhost" ]]; then
     # until ${ZK_HOME}/bin/zkServer.sh status; do
     #     sleep 0.1
     # done
+}
+
+# zookeeper-server-start.sh ${KAFKA_HOME}/config/zookeeper.properties
+if [[ -z $KAFKA_ZK_CONNECTION || $KAFKA_ZK_CONNECTION =~ "localhost" ]]; then
+    downloadAndRunZookeeper
 fi
