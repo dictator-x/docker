@@ -37,7 +37,7 @@ RUN \
     mkdir -p ${FLUME_HOME} && \
     tar -zxvf ${SOFTWARE_HOME}/apache-flume-${FLUME_VERSION}-bin.tar.gz -C ${FLUME_HOME} --strip-components=1
 
-EXPOSE 44444
+# EXPOSE 44444
 
 ENTRYPOINT ["flume-start.sh"]
 CMD ["netcat-memory-logger.conf"]

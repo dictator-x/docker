@@ -5,11 +5,13 @@ services:
     build:
       context: ./docker-flume
       dockerfile: Dockerfile
-      image: flume:latest
+    # image: flume:latest
     networks:
       - data-cloud
     ports:
       - 44444:44444
+    command: ["netcat-memory-logger.conf"]
+
   # kafka:
   #   build:
   #     context: ./docker-flume
