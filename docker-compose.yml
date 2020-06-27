@@ -1,7 +1,18 @@
 version: "3"
 
 services:
-  flume:
+  # flume-netcat-memory-logger:
+  #   build:
+  #     context: ./docker-flume
+  #     dockerfile: Dockerfile
+  #   # image: flume:latest
+  #   networks:
+  #     - data-cloud
+  #   ports:
+  #     - 44444:44444
+  #   command: ["netcat-memory-logger"]
+
+  flume-netcat-memory-avro:
     build:
       context: ./docker-flume
       dockerfile: Dockerfile
@@ -10,7 +21,16 @@ services:
       - data-cloud
     ports:
       - 44444:44444
-    command: ["netcat-memory-logger.conf"]
+    command: ["netcat-memory-avro"]
+
+  flume-avro-memory-logger:
+    build:
+      context: ./docker-flume
+      dockerfile: Dockerfile
+    # image: flume:latest
+    networks:
+      - data-cloud
+    command: ["avro-memory-logger"]
 
   # kafka:
   #   build:
