@@ -27,14 +27,25 @@ function downloadAndRunZookeeper() {
     tar -zxvf ${SOFTWARE_HOME}/${ZK_FILENAME}.tar.gz -C ${ZK_HOME} --strip-components=1
 
     mv ${ZK_HOME}/conf/zoo_sample.cfg ${ZK_HOME}/conf/zoo.cfg
-    ${ZK_HOME}/bin/zkServer.sh start-foreground
+    # ${ZK_HOME}/bin/zkServer.sh start-foreground
+    ${ZK_HOME}/bin/zkServer.sh start
+
+    local i=0
+    local spin='-\|/'
+    while ! nc -z localhost 2181 </dev/null; do
+        i=$(( (i+1) %4 ))
+        # printf "\r[${spin:$i:1}]"
+        printf "\rWaiting ZOOKEEPER start...[${spin:$i:1}]"
+        sleep .1;
+    done
 
     # until ${ZK_HOME}/bin/zkServer.sh status; do
-    #     sleep 0.1
+    #     sleep 1
     # done
 }
 
-# zookeeper-server-start.sh ${KAFKA_HOME}/config/zookeeper.properties
 if [[ -z $KAFKA_ZK_CONNECTION || $KAFKA_ZK_CONNECTION =~ "localhost" ]]; then
     downloadAndRunZookeeper
 fi
+
+kafka-server-start.sh ${KAFKA_HOME}/config/server.properties

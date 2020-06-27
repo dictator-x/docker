@@ -38,6 +38,8 @@ RUN \
     chmod a+x ${SCRIPT_HOME}/*.sh && \
     yum install -y wget && \
     yum install -y curl && \
+    yum install -y net-tools && \
+    yum install -y nmap && \
     yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
     yum install -y jq && \
     download-kafka.sh && \
