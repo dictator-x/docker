@@ -46,7 +46,8 @@ RUN \
     sync && mkdir -p ${KAFKA_HOME} && \
     tar -zxvf ${SOFTWARE_HOME}/${KAFKA_FILE} -C ${KAFKA_HOME} --strip-components=1
 
+EXPOSE 9092
 
 # ENTRYPOINT ["bash", "-r", "start-kafka.sh"]
-ENTRYPOINT ["bash", "start-kafka.sh"]
+ENTRYPOINT ["start-kafka.sh"]
 # CMD ["bash", "-r", "start-kafka.sh"]

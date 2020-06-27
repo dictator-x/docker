@@ -25,23 +25,20 @@ ARG flume_home=${app_home}/${flume_name}
 ENV FLUME_VERSION ${flume_version}
 ENV FLUME_NAME flume
 ENV FLUME_HOME ${flume_home}
+ENV PATH=${PATH}:${SCRIPT_HOME}:${FLUME_HOME}/bin
+
+COPY conf/ ${FLUME_HOME}/conf
+COPY script/ ${SCRIPT_HOME}
 
 RUN \
+    chmod a+x ${SCRIPT_HOME}/*.sh && \
     yum install -y wget && \
     wget https://downloads.apache.org/flume/${FLUME_VERSION}/apache-flume-${FLUME_VERSION}-bin.tar.gz -P ${SOFTWARE_HOME}/ && \
     mkdir -p ${FLUME_HOME} && \
     tar -zxvf ${SOFTWARE_HOME}/apache-flume-${FLUME_VERSION}-bin.tar.gz -C ${FLUME_HOME} --strip-components=1
 
-ENV PATH="${FLUME_HOME}/bin:${PATH}"
-
-COPY conf/ ${FLUME_HOME}/conf
-
 EXPOSE 44444
 
-# ENTRYPOINT ["sh", "-c", "flume-ng agent --name a1 --conf $FLUME_HOME/conf --conf-file $FLUME_HOME/conf/example.conf -Dflume.root.logger=INFO,console"]
-
-ARG test_file=${log_home}/logger
-RUN touch ${test_file}
-
-ENTRYPOINT ["sh", "-c", "flume-ng agent --name a1 --conf $FLUME_HOME/conf --conf-file $FLUME_HOME/conf/exec-memory-logger.conf -Dflume.root.logger=INFO,console"]
+ENTRYPOINT ["flume-start.sh"]
+CMD ["netcat-memory-logger.conf"]
 

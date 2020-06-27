@@ -5,9 +5,19 @@ services:
     build:
       context: ./docker-flume
       dockerfile: Dockerfile
+      image: flume:latest
+    networks:
+      - data-cloud
     ports:
       - 44444:44444
+  # kafka:
+  #   build:
+  #     context: ./docker-flume
+  #     dockerfile: Dockerfile
+  #     image: kafka.latest
+  #   networks:
+  #     - data-cloud
 
 networks:
-  my-bridge:
+  data-cloud:
     driver: bridge
