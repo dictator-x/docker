@@ -24,7 +24,7 @@ function downloadAndRunZookeeper() {
     gpg --verify ${SOFTWARE_HOME}/${ZK_FILENAME}.tar.gz.asc
 
     mkdir -p ${ZK_HOME}
-    tar -zxvf ${SOFTWARE_HOME}/${ZK_FILENAME}.tar.gz -C ${ZK_HOME} --strip-components=1
+    tar -zxf ${SOFTWARE_HOME}/${ZK_FILENAME}.tar.gz -C ${ZK_HOME} --strip-components=1
 
     mv ${ZK_HOME}/conf/zoo_sample.cfg ${ZK_HOME}/conf/zoo.cfg
     # ${ZK_HOME}/bin/zkServer.sh start-foreground
@@ -39,9 +39,6 @@ function downloadAndRunZookeeper() {
         sleep .1;
     done
 
-    # until ${ZK_HOME}/bin/zkServer.sh status; do
-    #     sleep 1
-    # done
 }
 
 if [[ -z $KAFKA_ZK_CONNECTION || $KAFKA_ZK_CONNECTION =~ "localhost" ]]; then

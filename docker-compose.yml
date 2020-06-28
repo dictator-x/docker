@@ -1,44 +1,69 @@
 version: "3"
 
 services:
-  # flume-netcat-memory-logger:
-  #   build:
-  #     context: ./docker-flume
-  #     dockerfile: Dockerfile
-  #   # image: flume:latest
-  #   networks:
-  #     - data-cloud
-  #   ports:
-  #     - 44444:44444
-  #   command: ["netcat-memory-logger"]
+  # # flume-netcat-memory-logger:
+  # #   build:
+  # #     context: ./docker-flume
+  # #     dockerfile: Dockerfile
+  # #   # image: flume:latest
+  # #   networks:
+  # #     - data-cloud
+  # #   ports:
+  # #     - 44444:44444
+  # #   command: ["netcat-memory-logger"]
 
   flume-netcat-memory-avro:
     build:
       context: ./docker-flume
       dockerfile: Dockerfile
     # image: flume:latest
+    depends_on:
+      - flume-avro-memory-sink
     networks:
       - data-cloud
     ports:
       - 44444:44444
     command: ["netcat-memory-avro"]
 
-  flume-avro-memory-logger:
+  # # flume-avro-memory-sink:
+  # #   build:
+  # #     context: ./docker-flume
+  # #     dockerfile: Dockerfile
+  # #   # image: flume:latest
+  # #   networks:
+  # #     - data-cloud
+  # #   command: ["avro-memory-logger"]
+
+  flume-avro-memory-sink:
     build:
       context: ./docker-flume
       dockerfile: Dockerfile
     # image: flume:latest
+    depends_on:
+      - kafka
     networks:
       - data-cloud
-    command: ["avro-memory-logger"]
+    command: ["avro-memory-kafka"]
 
-  # kafka:
+  # flume-netcat-memory-kafka:
   #   build:
   #     context: ./docker-flume
   #     dockerfile: Dockerfile
-  #     image: kafka.latest
+  #   # image: flume:latest
+  #   depends_on:
+  #     - kafka
   #   networks:
   #     - data-cloud
+  #   ports:
+  #     - 44444:44444
+  #   command: ["netcat-memory-kafka"]
+
+  kafka:
+    build:
+      context: ./docker-kafka
+      dockerfile: Dockerfile
+    networks:
+      - data-cloud
 
 networks:
   data-cloud:
