@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  eureka:
+    image: springcloud/eureka
+    networks:
+      - spring-cloud
+    ports:
+      - 8761:8761
+
+networks:
+  spring-cloud:
+    driver: bridge
